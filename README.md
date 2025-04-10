@@ -1,5 +1,5 @@
 # GAN-Monet-Paintings
-The goal of this project was to develop a generative adversarial network (GAN) to translate photos into Monet-style paintings. The project also used the TFRecord format for data management and processing.
+The goal of this project was to develop a generative adversarial network (GAN) to translate photos into Monet-style paintings. Project data was provided by the ["I'm Something of a Painter Myself" Kaggle Competition](https://www.kaggle.com/competitions/gan-getting-started) and programmed in a Kaggle Notebook to use GPU accelerators.
 
 A GAN was developed following the CycleGAN architecture. This is common for image translation applications, in this case between the 'photo' and 'painting' domains. CycleGAN involves two autoencoder generators, and two discriminators. Model training accounts for adversarial loss (tricking the discriminator), cycle loss (domain A>B>A reproducibility), and identity loss (domain A>A maintaining features). The autoencoder generators use convolutions and transpose convolutions to respectively downsample/encode and upsample/decode images. The CycleGAN literature recommends several residual block layers in the autoencoder bottleneck, which was replaced by transformation convolution layers for simplicity.
 
