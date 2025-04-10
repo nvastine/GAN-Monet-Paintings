@@ -1,2 +1,12 @@
 # GAN-Monet-Paintings
-CycleGAN implementation to translate photos into Claude Monet's painting style.
+The goal of this project was to develop a generative adversarial network (GAN) to translate photos into Monet-style paintings. The project also used the TFRecord format for data management and processing.
+
+A GAN was developed following the CycleGAN architecture. This is common for image translation applications, in this case between the 'photo' and 'painting' domains. CycleGAN involves two autoencoder generators, and two discriminators. Model training accounts for adversarial loss (tricking the discriminator), cycle loss (domain A>B>A reproducibility), and identity loss (domain A>A maintaining features). The autoencoder generators use convolutions and transpose convolutions to respectively downsample/encode and upsample/decode images. The CycleGAN literature recommends several residual block layers in the autoencoder bottleneck, which was replaced by transformation convolution layers for simplicity.
+
+The model performed as expected, incorporating several painterly aspects while maintaining key features of the original image. The output images began quite blurry and with 'flat' color schemes, but over training gradually adopted Monet-style colors and improved image resolution.
+
+A secondary and tertiary model evaluated the effect of weighing cycle and identity loss differently. The secondary model removed cycle and identity losses. This effectively converts the system into two isolated Deep Convolution GAN (DCGAN) systems using our training images as input instead of random noise. This resulted in very poor performance, removing all color information and simply identifying edges with increasing resolution. The tertiary model doubled the weight of cycle and identity losses, which may improve color and resolution retention but this was not quantified.
+
+A final model considered an alternative architecture, incorporating a skip connection similar to UNet architectures. Skip connections (such as those in proposed residual blocks) help retain spatial information which may be lost during encoding. However, this project's implementation of skip connections seemed to override the painterly style.
+
+Further development could create more sample variations for a more robust model, implement residual blocks at the autoencoder bottleneck, incrementally train models at increasing image sizes, and also consider training the model on more abstract art styles to see how it performs on harder tasks.
